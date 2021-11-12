@@ -1,5 +1,4 @@
 import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -50,11 +49,15 @@ public class Game
         String a = key.getKeyType().toString();
             switch(a)
             {
-                case "ArrowUp": hero.moveUp(); break;
-                case "ArrowLeft": hero.moveLeft(); break;
-                case "ArrowDown": hero.moveDown(); break;
-                case "ArrowRight": hero.moveRight(); break;
+                case "ArrowUp": moveHero(hero.moveUp()); break;
+                case "ArrowLeft": moveHero(hero.moveLeft()); break;
+                case "ArrowDown": moveHero(hero.moveDown()); break;
+                case "ArrowRight": moveHero(hero.moveRight()); break;
             }
+    }
+    private void moveHero(Position position)
+    {
+        hero.setPosition(position);
     }
 
 
