@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class Game
 {
+    Arena arena = new Arena(40,20);
     private Screen screen;
-    Hero hero = new Hero(10,10);
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         screen = new TerminalScreen(terminal);
@@ -24,7 +24,7 @@ public class Game
     private void draw() throws IOException
     {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
     public void run() throws IOException
@@ -46,19 +46,9 @@ public class Game
     }
     private void processKey(KeyStroke key)
     {
-        String a = key.getKeyType().toString();
-            switch(a)
-            {
-                case "ArrowUp": moveHero(hero.moveUp()); break;
-                case "ArrowLeft": moveHero(hero.moveLeft()); break;
-                case "ArrowDown": moveHero(hero.moveDown()); break;
-                case "ArrowRight": moveHero(hero.moveRight()); break;
-            }
+        arena.processKey(key);
     }
-    private void moveHero(Position position)
-    {
-        hero.setPosition(position);
-    }
+
 
 
 }
