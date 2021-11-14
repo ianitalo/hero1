@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Game
 {
-    Arena arena = new Arena(40,20);
+    Arena arena = new Arena(15,15);
     private Screen screen;
     public Game() throws IOException {
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
