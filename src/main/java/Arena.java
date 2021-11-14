@@ -1,4 +1,5 @@
-import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.*;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
@@ -24,9 +25,12 @@ public class Arena
             case "ArrowRight": moveHero(hero.moveRight()); break;
         }
     }
-    public void draw(Screen screen)
-    {
-        screen.setCharacter(hero.getX(), hero.getY(), TextCharacter.fromCharacter('X')[0]);
+    public void draw(TextGraphics graphics) {
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
+        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
+        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
+        graphics.enableModifiers(SGR.BOLD);
+        graphics.putString(new TerminalPosition(hero.getX(), hero.getY()), "X");
     }
     private void moveHero(Position position)
     {
@@ -35,6 +39,13 @@ public class Arena
     }
     private boolean canHeroMove(Position position)
     {
-        return true; // preciso fazer isso ainda
+        if (position.getX() < 0 || position.getX() >= width || position.getY() < 0 || position.getY() >= height)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
