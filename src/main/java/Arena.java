@@ -49,10 +49,10 @@ public class Arena
     }
     private void moveHero(Position position)
     {
-        if (canHeroMove(position))
+        if (isvalidmove(position))
             hero.setPosition(position);
     }
-    private boolean canHeroMove(Position position)
+    private boolean isvalidmove(Position position)
     {
         if (position.getX() <= 0 || position.getX() >= width -1 || position.getY() <= 0 || position.getY() >= height -1)
         {
@@ -143,9 +143,28 @@ public class Arena
     }
     private void moveMonsters()
     {
+        Random random = new Random();
+        Position testpos;
         for(Monster m: monsters)
         {
-            m.move();
+            int x = random.nextInt(4);
+            switch(x)
+            {
+                case 0: testpos = new Position(m.getPosition().getX()+1,m.getPosition().getY());break;
+                case 1: testpos = new Position(m.getPosition().getX()-1,m.getPosition().getY());break;
+                case 2: testpos = new Position(m.getPosition().getX(),m.getPosition().getY()+1);break;
+                case 3: testpos = new Position(m.getPosition().getX(),m.getPosition().getY()-1);break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + x);
+            }
+            if(isvalidmove(testpos))
+            {
+                m.move(testpos);
+            }
+            else
+            {
+                continue;
+            }
         }
     }
     private void verifyMonsterCollisions()

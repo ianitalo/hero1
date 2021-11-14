@@ -47,7 +47,4 @@ public class Game
     {
         arena.processKey(key);
     }
-
-
-
 }
