@@ -11,6 +11,7 @@ public class Arena
     private Hero hero;
     private List<Wall> walls;
     private List<Coin> coins;
+    private List<Monster> monsters;
     public Arena(int wid,int hei)
     {
         width = wid;
@@ -18,6 +19,7 @@ public class Arena
         hero = new Hero(10,10);
         this.walls = createWalls();
         this.coins = createCoins();
+        this.monsters = createMonsters();
     }
 
     public void processKey(KeyStroke key)
@@ -30,6 +32,10 @@ public class Arena
             case "ArrowDown": moveHero(hero.moveDown()); break;
             case "ArrowRight": moveHero(hero.moveRight()); break;
         }
+        retrieveCoins();
+        verifyMonsterCollisions();
+        moveMonsters();
+        verifyMonsterCollisions();
     }
     public void draw(TextGraphics graphics) {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
@@ -39,12 +45,12 @@ public class Arena
         hero.draw(graphics);
         for (Coin coin: coins) coin.draw(graphics);
         for (Wall wall : walls) wall.draw(graphics);
+        for (Monster monster: monsters) monster.draw(graphics);
     }
     private void moveHero(Position position)
     {
         if (canHeroMove(position))
             hero.setPosition(position);
-            retrieveCoins();
     }
     private boolean canHeroMove(Position position)
     {
@@ -107,6 +113,49 @@ public class Arena
             {
                 coins.remove(i);
                 break;
+            }
+        }
+    }
+    private List<Monster> createMonsters()
+    {
+        Random random= new Random();
+        ArrayList<Monster> monsters = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+        {
+            int x = random.nextInt(width - 2) + 1;
+            int y = random.nextInt(height - 2) + 1;
+            if(hero.getPosition().equals(new Position (x,y)))
+            {
+                i--;
+                continue;
+            }
+            for (Monster m: monsters)
+            {
+                if(m.getPosition().equals(new Position(x,y)))
+                {
+                    i--;
+                    continue;
+                }
+            }
+            monsters.add(new Monster(x, y));
+        }
+        return monsters;
+    }
+    private void moveMonsters()
+    {
+        for(Monster m: monsters)
+        {
+            m.move();
+        }
+    }
+    private void verifyMonsterCollisions()
+    {
+        for(Monster m: monsters)
+        {
+            if (m.position.equals(hero.position))
+            {
+                System.out.println("You died!");
+                System.exit(0);
             }
         }
     }
