@@ -1,19 +1,14 @@
 import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
-public class Wall
+public class Wall extends Element
 {
-    private Position position;
     public Wall(int x, int y)
     {
-        position = new Position(x,y);
+        super(x,y);
     }
     public void draw(TextGraphics graphics)
     {
         graphics.putString(new TerminalPosition(position.getX(), position.getY()), "O");
-    }
-    public Position getPosition()
-    {
-        return position;
     }
 }

@@ -33,7 +33,7 @@ public class Arena
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
         graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(hero.getX(), hero.getY()), "X"); //this is the hero.draw() method dk if I should put there
+        hero.draw(graphics);
         for (Wall wall : walls) wall.draw(graphics);
     }
     private void moveHero(Position position)

@@ -1,9 +1,11 @@
-public class Hero
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.graphics.TextGraphics;
+
+public class Hero extends Element
 {
-    private Position position;
     public Hero(int x,int y)
     {
-        position = new Position(x,y);
+        super(x,y);
     }
     public Position moveUp()
     {
@@ -22,17 +24,8 @@ public class Hero
         return new Position(position.getX()-1, position.getY());
     }
 
-    public void setPosition(Position pos)
+    public void draw(TextGraphics graphics)
     {
-        position.setX(pos.getX());
-        position.setY(pos.getY());
-    }
-    public int getX()
-    {
-        return position.getX();
-    }
-    public int getY()
-    {
-        return position.getY();
+        graphics.putString(new TerminalPosition(position.getX(), position.getY()), "X");
     }
 }
