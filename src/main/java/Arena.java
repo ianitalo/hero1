@@ -107,11 +107,21 @@ public class Arena
     }
     private void retrieveCoins()
     {
+        if(coins.isEmpty())
+        {
+            System.out.println("You win!");
+            System.exit(0);
+        }
         for(int i = 0;i<coins.size();i++)
         {
             if (coins.get(i).getPosition().equals(hero.getPosition()))
             {
                 coins.remove(i);
+                if(coins.isEmpty())
+                {
+                    System.out.println("You win!");
+                    System.exit(0);
+                }
                 break;
             }
         }
