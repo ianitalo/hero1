@@ -47,10 +47,14 @@ public class Arena
         {
             return false;
         }
-        else
+        for (Wall wall : walls)
         {
-            return true;
+            if (wall.getPosition().equals(position))
+            {
+                return false;
+            }
         }
+        return true;
     }
     private List<Wall> createWalls()
     {
